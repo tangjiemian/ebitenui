@@ -1,4 +1,4 @@
-package main
+package gui
 
 import (
 	"io/ioutil"
@@ -8,39 +8,39 @@ import (
 )
 
 const (
-	fontFaceRegular = "fonts/NotoSans-Regular.ttf"
-	fontFaceBold    = "fonts/NotoSans-Bold.ttf"
+	fontFaceRegular = "demorun/fonts/NotoSans-Regular.ttf"
+	fontFaceBold    = "demorun/fonts/NotoSans-Bold.ttf"
 )
 
-type fonts struct {
+type Fonts struct {
 	face         font.Face
 	titleFace    font.Face
 	bigTitleFace font.Face
 	toolTipFace  font.Face
 }
 
-func loadFonts() (*fonts, error) {
-	fontFace, err := loadFont(fontFaceRegular, 20)
+func LoadFonts() (*Fonts, error) {
+	fontFace, err := LoadFont(fontFaceRegular, 20)
 	if err != nil {
 		return nil, err
 	}
 
-	titleFontFace, err := loadFont(fontFaceBold, 24)
+	titleFontFace, err := LoadFont(fontFaceBold, 24)
 	if err != nil {
 		return nil, err
 	}
 
-	bigTitleFontFace, err := loadFont(fontFaceBold, 28)
+	bigTitleFontFace, err := LoadFont(fontFaceBold, 28)
 	if err != nil {
 		return nil, err
 	}
 
-	toolTipFace, err := loadFont(fontFaceRegular, 15)
+	toolTipFace, err := LoadFont(fontFaceRegular, 15)
 	if err != nil {
 		return nil, err
 	}
 
-	return &fonts{
+	return &Fonts{
 		face:         fontFace,
 		titleFace:    titleFontFace,
 		bigTitleFace: bigTitleFontFace,
@@ -48,7 +48,7 @@ func loadFonts() (*fonts, error) {
 	}, nil
 }
 
-func (f *fonts) close() {
+func (f *Fonts) Close() {
 	if f.face != nil {
 		_ = f.face.Close()
 	}
@@ -62,7 +62,7 @@ func (f *fonts) close() {
 	}
 }
 
-func loadFont(path string, size float64) (font.Face, error) {
+func LoadFont(path string, size float64) (font.Face, error) {
 	fontData, err := ioutil.ReadFile(path)
 	if err != nil {
 		return nil, err

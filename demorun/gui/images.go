@@ -1,4 +1,4 @@
-package main
+package gui
 
 import (
 	"github.com/blizzy78/ebitenui/image"
@@ -8,7 +8,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 )
 
-func loadGraphicImages(idle string, disabled string) (*widget.ButtonImageImage, error) {
+func LoadGraphicImages(idle string, disabled string) (*widget.ButtonImageImage, error) {
 	idleImage, _, err := ebitenutil.NewImageFromFile(idle)
 	if err != nil {
 		return nil, err
@@ -28,7 +28,7 @@ func loadGraphicImages(idle string, disabled string) (*widget.ButtonImageImage, 
 	}, nil
 }
 
-func loadImageNineSlice(path string, centerWidth int, centerHeight int) (*image.NineSlice, error) {
+func LoadImageNineSlice(path string, centerWidth int, centerHeight int) (*image.NineSlice, error) {
 	i, _, err := ebitenutil.NewImageFromFile(path)
 	if err != nil {
 		return nil, err

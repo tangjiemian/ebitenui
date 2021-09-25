@@ -1,4 +1,4 @@
-package main
+package gui
 
 import (
 	"image/color"
@@ -35,104 +35,104 @@ const (
 	separatorColor = listDisabledSelectedBackground
 )
 
-type uiResources struct {
-	fonts *fonts
+type UiResources struct {
+	Fonts *Fonts
 
-	background *image.NineSlice
+	Background *image.NineSlice
 
-	separatorColor color.Color
+	SeparatorColor color.Color
 
-	text        *textResources
-	button      *buttonResources
-	label       *labelResources
-	checkbox    *checkboxResources
-	comboButton *comboButtonResources
-	list        *listResources
-	slider      *sliderResources
-	panel       *panelResources
-	tabBook     *tabBookResources
-	header      *headerResources
-	textInput   *textInputResources
-	toolTip     *toolTipResources
+	Text        *TextResources
+	Button      *buttonResources
+	Label       *labelResources
+	Checkbox    *checkboxResources
+	ComboButton *comboButtonResources
+	List        *listResources
+	Slider      *sliderResources
+	Panel       *panelResources
+	TabBook     *tabBookResources
+	Header      *headerResources
+	TextInput   *textInputResources
+	ToolTip     *toolTipResources
 }
 
-type textResources struct {
-	idleColor     color.Color
-	disabledColor color.Color
-	face          font.Face
-	titleFace     font.Face
-	bigTitleFace  font.Face
-	smallFace     font.Face
+type TextResources struct {
+	IdleColor     color.Color
+	DisabledColor color.Color
+	Face          font.Face
+	TitleFace     font.Face
+	BigTitleFace  font.Face
+	SmallFace     font.Face
 }
 
 type buttonResources struct {
-	image   *widget.ButtonImage
-	text    *widget.ButtonTextColor
-	face    font.Face
-	padding widget.Insets
+	Image   *widget.ButtonImage
+	Text    *widget.ButtonTextColor
+	Face    font.Face
+	Padding widget.Insets
 }
 
 type checkboxResources struct {
-	image   *widget.ButtonImage
-	graphic *widget.CheckboxGraphicImage
-	spacing int
+	Image   *widget.ButtonImage
+	Graphic *widget.CheckboxGraphicImage
+	Spacing int
 }
 
 type labelResources struct {
-	text *widget.LabelColor
-	face font.Face
+	Text *widget.LabelColor
+	Face font.Face
 }
 
 type comboButtonResources struct {
-	image   *widget.ButtonImage
-	text    *widget.ButtonTextColor
-	face    font.Face
-	graphic *widget.ButtonImageImage
-	padding widget.Insets
+	Image   *widget.ButtonImage
+	Text    *widget.ButtonTextColor
+	Face    font.Face
+	Graphic *widget.ButtonImageImage
+	Padding widget.Insets
 }
 
 type listResources struct {
-	image        *widget.ScrollContainerImage
-	track        *widget.SliderTrackImage
-	trackPadding widget.Insets
-	handle       *widget.ButtonImage
-	handleSize   int
-	face         font.Face
-	entry        *widget.ListEntryColor
-	entryPadding widget.Insets
+	Image        *widget.ScrollContainerImage
+	Track        *widget.SliderTrackImage
+	TrackPadding widget.Insets
+	Handle       *widget.ButtonImage
+	HandleSize   int
+	Face         font.Face
+	Entry        *widget.ListEntryColor
+	EntryPadding widget.Insets
 }
 
 type sliderResources struct {
-	trackImage *widget.SliderTrackImage
-	handle     *widget.ButtonImage
-	handleSize int
+	TrackImage *widget.SliderTrackImage
+	Handle     *widget.ButtonImage
+	HandleSize int
 }
 
 type panelResources struct {
-	image   *image.NineSlice
-	padding widget.Insets
+	Image   *image.NineSlice
+	Padding widget.Insets
 }
 
 type tabBookResources struct {
-	idleButton     *widget.ButtonImage
-	selectedButton *widget.ButtonImage
-	buttonFace     font.Face
-	buttonText     *widget.ButtonTextColor
-	buttonPadding  widget.Insets
+	IdleButton     *widget.ButtonImage
+	SelectedButton *widget.ButtonImage
+	ButtonFace     font.Face
+	ButtonText     *widget.ButtonTextColor
+	ButtonPadding  widget.Insets
 }
 
 type headerResources struct {
-	background *image.NineSlice
-	padding    widget.Insets
-	face       font.Face
-	color      color.Color
+	Background *image.NineSlice
+	Padding    widget.Insets
+	Face       font.Face
+	Color      color.Color
 }
 
 type textInputResources struct {
-	image   *widget.TextInputImage
-	padding widget.Insets
-	face    font.Face
-	color   *widget.TextInputColor
+	Image   *widget.TextInputImage
+	Padding widget.Insets
+	Face    font.Face
+	Color   *widget.TextInputColor
 }
 
 type toolTipResources struct {
@@ -142,10 +142,10 @@ type toolTipResources struct {
 	color      color.Color
 }
 
-func newUIResources() (*uiResources, error) {
+func NewUIResources() (*UiResources, error) {
 	background := image.NewNineSliceColor(hexToColor(backgroundColor))
 
-	fonts, err := loadFonts()
+	fonts, err := LoadFonts()
 	if err != nil {
 		return nil, err
 	}
@@ -200,53 +200,53 @@ func newUIResources() (*uiResources, error) {
 		return nil, err
 	}
 
-	return &uiResources{
-		fonts: fonts,
+	return &UiResources{
+		Fonts: fonts,
 
-		background: background,
+		Background: background,
 
-		separatorColor: hexToColor(separatorColor),
+		SeparatorColor: hexToColor(separatorColor),
 
-		text: &textResources{
-			idleColor:     hexToColor(textIdleColor),
-			disabledColor: hexToColor(textDisabledColor),
-			face:          fonts.face,
-			titleFace:     fonts.titleFace,
-			bigTitleFace:  fonts.bigTitleFace,
-			smallFace:     fonts.toolTipFace,
+		Text: &TextResources{
+			IdleColor:     hexToColor(textIdleColor),
+			DisabledColor: hexToColor(textDisabledColor),
+			Face:          fonts.face,
+			TitleFace:     fonts.titleFace,
+			BigTitleFace:  fonts.bigTitleFace,
+			SmallFace:     fonts.toolTipFace,
 		},
 
-		button:      button,
-		label:       newLabelResources(fonts),
-		checkbox:    checkbox,
-		comboButton: comboButton,
-		list:        list,
-		slider:      slider,
-		panel:       panel,
-		tabBook:     tabBook,
-		header:      header,
-		textInput:   textInput,
-		toolTip:     toolTip,
+		Button:      button,
+		Label:       newLabelResources(fonts),
+		Checkbox:    checkbox,
+		ComboButton: comboButton,
+		List:        list,
+		Slider:      slider,
+		Panel:       panel,
+		TabBook:     tabBook,
+		Header:      header,
+		TextInput:   textInput,
+		ToolTip:     toolTip,
 	}, nil
 }
 
-func newButtonResources(fonts *fonts) (*buttonResources, error) {
-	idle, err := loadImageNineSlice("graphics/button-idle.png", 12, 0)
+func newButtonResources(fonts *Fonts) (*buttonResources, error) {
+	idle, err := LoadImageNineSlice("demorun/graphics/button-idle.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	hover, err := loadImageNineSlice("graphics/button-hover.png", 12, 0)
+	hover, err := LoadImageNineSlice("demorun/graphics/button-hover.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	pressed, err := loadImageNineSlice("graphics/button-pressed.png", 12, 0)
+	pressed, err := LoadImageNineSlice("demorun/graphics/button-pressed.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, err := loadImageNineSlice("graphics/button-disabled.png", 12, 0)
+	disabled, err := LoadImageNineSlice("demorun/graphics/button-disabled.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -259,16 +259,16 @@ func newButtonResources(fonts *fonts) (*buttonResources, error) {
 	}
 
 	return &buttonResources{
-		image: i,
+		Image: i,
 
-		text: &widget.ButtonTextColor{
+		Text: &widget.ButtonTextColor{
 			Idle:     hexToColor(buttonIdleColor),
 			Disabled: hexToColor(buttonDisabledColor),
 		},
 
-		face: fonts.face,
+		Face: fonts.face,
 
-		padding: widget.Insets{
+		Padding: widget.Insets{
 			Left:  30,
 			Right: 30,
 		},
@@ -276,82 +276,81 @@ func newButtonResources(fonts *fonts) (*buttonResources, error) {
 }
 
 func newCheckboxResources() (*checkboxResources, error) {
-	idle, err := loadImageNineSlice("graphics/checkbox-idle.png", 20, 0)
+	idle, err := LoadImageNineSlice("demorun/graphics/checkbox-idle.png", 20, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	hover, err := loadImageNineSlice("graphics/checkbox-hover.png", 20, 0)
+	hover, err := LoadImageNineSlice("demorun/graphics/checkbox-hover.png", 20, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, err := loadImageNineSlice("graphics/checkbox-disabled.png", 20, 0)
+	disabled, err := LoadImageNineSlice("demorun/graphics/checkbox-disabled.png", 20, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	checked, err := loadGraphicImages("graphics/checkbox-checked-idle.png", "graphics/checkbox-checked-disabled.png")
+	checked, err := LoadGraphicImages("demorun/graphics/checkbox-checked-idle.png", "demorun/graphics/checkbox-checked-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
-	unchecked, err := loadGraphicImages("graphics/checkbox-unchecked-idle.png", "graphics/checkbox-unchecked-disabled.png")
+	unchecked, err := LoadGraphicImages("demorun/graphics/checkbox-unchecked-idle.png", "demorun/graphics/checkbox-unchecked-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
-	greyed, err := loadGraphicImages("graphics/checkbox-greyed-idle.png", "graphics/checkbox-greyed-disabled.png")
+	greyed, err := LoadGraphicImages("demorun/graphics/checkbox-greyed-idle.png", "demorun/graphics/checkbox-greyed-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
 	return &checkboxResources{
-		image: &widget.ButtonImage{
+		Image: &widget.ButtonImage{
 			Idle:     idle,
 			Hover:    hover,
 			Pressed:  hover,
 			Disabled: disabled,
 		},
 
-		graphic: &widget.CheckboxGraphicImage{
+		Graphic: &widget.CheckboxGraphicImage{
 			Checked:   checked,
 			Unchecked: unchecked,
 			Greyed:    greyed,
 		},
 
-		spacing: 10,
+		Spacing: 10,
 	}, nil
 }
 
-func newLabelResources(fonts *fonts) *labelResources {
+func newLabelResources(fonts *Fonts) *labelResources {
 	return &labelResources{
-		text: &widget.LabelColor{
+		Text: &widget.LabelColor{
 			Idle:     hexToColor(labelIdleColor),
 			Disabled: hexToColor(labelDisabledColor),
 		},
-
-		face: fonts.face,
+		Face: fonts.face,
 	}
 }
 
-func newComboButtonResources(fonts *fonts) (*comboButtonResources, error) {
-	idle, err := loadImageNineSlice("graphics/combo-button-idle.png", 12, 0)
+func newComboButtonResources(fonts *Fonts) (*comboButtonResources, error) {
+	idle, err := LoadImageNineSlice("demorun/graphics/combo-button-idle.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	hover, err := loadImageNineSlice("graphics/combo-button-hover.png", 12, 0)
+	hover, err := LoadImageNineSlice("demorun/graphics/combo-button-hover.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	pressed, err := loadImageNineSlice("graphics/combo-button-pressed.png", 12, 0)
+	pressed, err := LoadImageNineSlice("demorun/graphics/combo-button-pressed.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, err := loadImageNineSlice("graphics/combo-button-disabled.png", 12, 0)
+	disabled, err := LoadImageNineSlice("demorun/graphics/combo-button-disabled.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -363,94 +362,94 @@ func newComboButtonResources(fonts *fonts) (*comboButtonResources, error) {
 		Disabled: disabled,
 	}
 
-	arrowDown, err := loadGraphicImages("graphics/arrow-down-idle.png", "graphics/arrow-down-disabled.png")
+	arrowDown, err := LoadGraphicImages("demorun/graphics/arrow-down-idle.png", "demorun/graphics/arrow-down-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
 	return &comboButtonResources{
-		image: i,
+		Image: i,
 
-		text: &widget.ButtonTextColor{
+		Text: &widget.ButtonTextColor{
 			Idle:     hexToColor(buttonIdleColor),
 			Disabled: hexToColor(buttonDisabledColor),
 		},
 
-		face:    fonts.face,
-		graphic: arrowDown,
+		Face:    fonts.face,
+		Graphic: arrowDown,
 
-		padding: widget.Insets{
+		Padding: widget.Insets{
 			Left:  30,
 			Right: 30,
 		},
 	}, nil
 }
 
-func newListResources(fonts *fonts) (*listResources, error) {
-	idle, _, err := ebitenutil.NewImageFromFile("graphics/list-idle.png")
+func newListResources(fonts *Fonts) (*listResources, error) {
+	idle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/list-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, _, err := ebitenutil.NewImageFromFile("graphics/list-disabled.png")
+	disabled, _, err := ebitenutil.NewImageFromFile("demorun/graphics/list-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
-	mask, _, err := ebitenutil.NewImageFromFile("graphics/list-mask.png")
+	mask, _, err := ebitenutil.NewImageFromFile("demorun/graphics/list-mask.png")
 	if err != nil {
 		return nil, err
 	}
 
-	trackIdle, _, err := ebitenutil.NewImageFromFile("graphics/list-track-idle.png")
+	trackIdle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/list-track-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	trackDisabled, _, err := ebitenutil.NewImageFromFile("graphics/list-track-disabled.png")
+	trackDisabled, _, err := ebitenutil.NewImageFromFile("demorun/graphics/list-track-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
-	handleIdle, _, err := ebitenutil.NewImageFromFile("graphics/slider-handle-idle.png")
+	handleIdle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-handle-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	handleHover, _, err := ebitenutil.NewImageFromFile("graphics/slider-handle-hover.png")
+	handleHover, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-handle-hover.png")
 	if err != nil {
 		return nil, err
 	}
 
 	return &listResources{
-		image: &widget.ScrollContainerImage{
+		Image: &widget.ScrollContainerImage{
 			Idle:     image.NewNineSlice(idle, [3]int{25, 12, 22}, [3]int{25, 12, 25}),
 			Disabled: image.NewNineSlice(disabled, [3]int{25, 12, 22}, [3]int{25, 12, 25}),
 			Mask:     image.NewNineSlice(mask, [3]int{26, 10, 23}, [3]int{26, 10, 26}),
 		},
 
-		track: &widget.SliderTrackImage{
+		Track: &widget.SliderTrackImage{
 			Idle:     image.NewNineSlice(trackIdle, [3]int{5, 0, 0}, [3]int{25, 12, 25}),
 			Hover:    image.NewNineSlice(trackIdle, [3]int{5, 0, 0}, [3]int{25, 12, 25}),
 			Disabled: image.NewNineSlice(trackDisabled, [3]int{0, 5, 0}, [3]int{25, 12, 25}),
 		},
 
-		trackPadding: widget.Insets{
+		TrackPadding: widget.Insets{
 			Top:    5,
 			Bottom: 24,
 		},
 
-		handle: &widget.ButtonImage{
+		Handle: &widget.ButtonImage{
 			Idle:     image.NewNineSliceSimple(handleIdle, 0, 5),
 			Hover:    image.NewNineSliceSimple(handleHover, 0, 5),
 			Pressed:  image.NewNineSliceSimple(handleHover, 0, 5),
 			Disabled: image.NewNineSliceSimple(handleIdle, 0, 5),
 		},
 
-		handleSize: 5,
-		face:       fonts.face,
+		HandleSize: 5,
+		Face:       fonts.face,
 
-		entry: &widget.ListEntryColor{
+		Entry: &widget.ListEntryColor{
 			Unselected:         hexToColor(textIdleColor),
 			DisabledUnselected: hexToColor(textDisabledColor),
 
@@ -461,7 +460,7 @@ func newListResources(fonts *fonts) (*listResources, error) {
 			DisabledSelectedBackground: hexToColor(listDisabledSelectedBackground),
 		},
 
-		entryPadding: widget.Insets{
+		EntryPadding: widget.Insets{
 			Left:   30,
 			Right:  30,
 			Top:    2,
@@ -471,58 +470,58 @@ func newListResources(fonts *fonts) (*listResources, error) {
 }
 
 func newSliderResources() (*sliderResources, error) {
-	idle, _, err := ebitenutil.NewImageFromFile("graphics/slider-track-idle.png")
+	idle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-track-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, _, err := ebitenutil.NewImageFromFile("graphics/slider-track-disabled.png")
+	disabled, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-track-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
-	handleIdle, _, err := ebitenutil.NewImageFromFile("graphics/slider-handle-idle.png")
+	handleIdle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-handle-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	handleHover, _, err := ebitenutil.NewImageFromFile("graphics/slider-handle-hover.png")
+	handleHover, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-handle-hover.png")
 	if err != nil {
 		return nil, err
 	}
 
-	handleDisabled, _, err := ebitenutil.NewImageFromFile("graphics/slider-handle-disabled.png")
+	handleDisabled, _, err := ebitenutil.NewImageFromFile("demorun/graphics/slider-handle-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
 	return &sliderResources{
-		trackImage: &widget.SliderTrackImage{
+		TrackImage: &widget.SliderTrackImage{
 			Idle:     image.NewNineSlice(idle, [3]int{0, 19, 0}, [3]int{6, 0, 0}),
 			Hover:    image.NewNineSlice(idle, [3]int{0, 19, 0}, [3]int{6, 0, 0}),
 			Disabled: image.NewNineSlice(disabled, [3]int{0, 19, 0}, [3]int{6, 0, 0}),
 		},
 
-		handle: &widget.ButtonImage{
+		Handle: &widget.ButtonImage{
 			Idle:     image.NewNineSliceSimple(handleIdle, 0, 5),
 			Hover:    image.NewNineSliceSimple(handleHover, 0, 5),
 			Pressed:  image.NewNineSliceSimple(handleHover, 0, 5),
 			Disabled: image.NewNineSliceSimple(handleDisabled, 0, 5),
 		},
 
-		handleSize: 6,
+		HandleSize: 6,
 	}, nil
 }
 
 func newPanelResources() (*panelResources, error) {
-	i, err := loadImageNineSlice("graphics/panel-idle.png", 10, 10)
+	i, err := LoadImageNineSlice("demorun/graphics/panel-idle.png", 10, 10)
 	if err != nil {
 		return nil, err
 	}
 
 	return &panelResources{
-		image: i,
-		padding: widget.Insets{
+		Image: i,
+		Padding: widget.Insets{
 			Left:   30,
 			Right:  30,
 			Top:    20,
@@ -531,23 +530,23 @@ func newPanelResources() (*panelResources, error) {
 	}, nil
 }
 
-func newTabBookResources(fonts *fonts) (*tabBookResources, error) {
-	selectedIdle, err := loadImageNineSlice("graphics/button-selected-idle.png", 12, 0)
+func newTabBookResources(fonts *Fonts) (*tabBookResources, error) {
+	selectedIdle, err := LoadImageNineSlice("demorun/graphics/button-selected-idle.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	selectedHover, err := loadImageNineSlice("graphics/button-selected-hover.png", 12, 0)
+	selectedHover, err := LoadImageNineSlice("demorun/graphics/button-selected-hover.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	selectedPressed, err := loadImageNineSlice("graphics/button-selected-pressed.png", 12, 0)
+	selectedPressed, err := LoadImageNineSlice("demorun/graphics/button-selected-pressed.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	selectedDisabled, err := loadImageNineSlice("graphics/button-selected-disabled.png", 12, 0)
+	selectedDisabled, err := LoadImageNineSlice("demorun/graphics/button-selected-disabled.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -559,22 +558,22 @@ func newTabBookResources(fonts *fonts) (*tabBookResources, error) {
 		Disabled: selectedDisabled,
 	}
 
-	idle, err := loadImageNineSlice("graphics/button-idle.png", 12, 0)
+	idle, err := LoadImageNineSlice("demorun/graphics/button-idle.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	hover, err := loadImageNineSlice("graphics/button-hover.png", 12, 0)
+	hover, err := LoadImageNineSlice("demorun/graphics/button-hover.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	pressed, err := loadImageNineSlice("graphics/button-pressed.png", 12, 0)
+	pressed, err := LoadImageNineSlice("demorun/graphics/button-pressed.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, err := loadImageNineSlice("graphics/button-disabled.png", 12, 0)
+	disabled, err := LoadImageNineSlice("demorun/graphics/button-disabled.png", 12, 0)
 	if err != nil {
 		return nil, err
 	}
@@ -587,70 +586,70 @@ func newTabBookResources(fonts *fonts) (*tabBookResources, error) {
 	}
 
 	return &tabBookResources{
-		selectedButton: selected,
-		idleButton:     unselected,
-		buttonFace:     fonts.face,
+		SelectedButton: selected,
+		IdleButton:     unselected,
+		ButtonFace:     fonts.face,
 
-		buttonText: &widget.ButtonTextColor{
+		ButtonText: &widget.ButtonTextColor{
 			Idle:     hexToColor(buttonIdleColor),
 			Disabled: hexToColor(buttonDisabledColor),
 		},
 
-		buttonPadding: widget.Insets{
+		ButtonPadding: widget.Insets{
 			Left:  30,
 			Right: 30,
 		},
 	}, nil
 }
 
-func newHeaderResources(fonts *fonts) (*headerResources, error) {
-	bg, err := loadImageNineSlice("graphics/header.png", 446, 9)
+func newHeaderResources(fonts *Fonts) (*headerResources, error) {
+	bg, err := LoadImageNineSlice("demorun/graphics/header.png", 446, 9)
 	if err != nil {
 		return nil, err
 	}
 
 	return &headerResources{
-		background: bg,
+		Background: bg,
 
-		padding: widget.Insets{
+		Padding: widget.Insets{
 			Left:   25,
 			Right:  25,
 			Top:    4,
 			Bottom: 4,
 		},
 
-		face:  fonts.bigTitleFace,
-		color: hexToColor(headerColor),
+		Face:  fonts.bigTitleFace,
+		Color: hexToColor(headerColor),
 	}, nil
 }
 
-func newTextInputResources(fonts *fonts) (*textInputResources, error) {
-	idle, _, err := ebitenutil.NewImageFromFile("graphics/text-input-idle.png")
+func newTextInputResources(fonts *Fonts) (*textInputResources, error) {
+	idle, _, err := ebitenutil.NewImageFromFile("demorun/graphics/text-input-idle.png")
 	if err != nil {
 		return nil, err
 	}
 
-	disabled, _, err := ebitenutil.NewImageFromFile("graphics/text-input-disabled.png")
+	disabled, _, err := ebitenutil.NewImageFromFile("demorun/graphics/text-input-disabled.png")
 	if err != nil {
 		return nil, err
 	}
 
 	return &textInputResources{
-		image: &widget.TextInputImage{
+		Image: &widget.TextInputImage{
 			Idle:     image.NewNineSlice(idle, [3]int{9, 14, 6}, [3]int{9, 14, 6}),
 			Disabled: image.NewNineSlice(disabled, [3]int{9, 14, 6}, [3]int{9, 14, 6}),
 		},
 
-		padding: widget.Insets{
+		Padding: widget.Insets{
 			Left:   8,
 			Right:  8,
 			Top:    4,
 			Bottom: 4,
 		},
 
-		face: fonts.face,
+		Face: fonts.face,
 
-		color: &widget.TextInputColor{
+		Color: &widget.TextInputColor{
 			Idle:          hexToColor(textIdleColor),
 			Disabled:      hexToColor(textDisabledColor),
 			Caret:         hexToColor(textInputCaretColor),
@@ -659,8 +658,8 @@ func newTextInputResources(fonts *fonts) (*textInputResources, error) {
 	}, nil
 }
 
-func newToolTipResources(fonts *fonts) (*toolTipResources, error) {
-	bg, _, err := ebitenutil.NewImageFromFile("graphics/tool-tip.png")
+func newToolTipResources(fonts *Fonts) (*toolTipResources, error) {
+	bg, _, err := ebitenutil.NewImageFromFile("demorun/graphics/tool-tip.png")
 	if err != nil {
 		return nil, err
 	}
@@ -680,8 +679,8 @@ func newToolTipResources(fonts *fonts) (*toolTipResources, error) {
 	}, nil
 }
 
-func (u *uiResources) close() {
-	u.fonts.close()
+func (u *UiResources) Close() {
+	u.Fonts.Close()
 }
 
 func hexToColor(h string) color.Color {
